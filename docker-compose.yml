@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=True
+    volumes:
+      - ./src:/app/src
+    command: python src/web/backend/app.py
+
+  web:
+    image: python:3.11-slim
+    ports:
+      - "8000:8000"
+    working_dir: /app
+    volumes:
+      - ./src/web/frontend:/app
+    command: python -m http.server 8000
